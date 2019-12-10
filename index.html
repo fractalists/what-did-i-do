@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>非门今天做了什么</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="shortcut icon" type="image/ico" href="./favicon.ico" />
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media que ries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+<script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="achievements.js"></script>
+
+  <style>
+    .left-panel {
+      width: 100px;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .gray-font {
+      color: gray;
+    }
+
+    .lighter-text {
+      width: 100px;
+      font-weight: lighter;
+      font-size: small;
+      text-align: right;
+    }
+
+    .achievement {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      display: flex;
+      bottom: 10px;
+      margin-left: 10px;
+      width: fit-content;
+    }
+
+    .bottom-item {
+      display: inline-block;
+      zoom: 1;
+      /* zoom and *display = ie7 hack for display:inline-block */
+      *display: inline;
+      vertical-align: baseline;
+      margin: 0 12px;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      padding: .5em 2em .55em;
+      -webkit-border-radius: .5em;
+      -moz-border-radius: .5em;
+      border-radius: .3em;
+      color: gray;
+    }
+
+    .bottom-search {
+      width: max-content;
+      display: inline-block;
+      zoom: 1;
+      /* zoom and *display = ie7 hack for display:inline-block */
+      *display: inline;
+      vertical-align: baseline;
+      margin: 0 12px;
+      outline: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      border-radius: .3em;
+      color: gray;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container-fluid" id="container">
+    <div class="row">
+      <table class="table">
+        <tbody>
+          <tr v-for="archive in filteredArchiveList">
+            <th class="left-panel" @click="toggleVisible(archive.date)">
+              <div v-if="!(getTodayDate() == archive.date || visibleMap[archive.date] || isSearching)"
+                class="gray-font">
+                <div v-if="getTodayDate() == archive.date">
+                  Today
+                </div>
+                <div v-else>
+                  {{ archive.date }}
+                </div>
+              </div>
+              <div v-else>
+                <div v-if="getTodayDate() == archive.date">
+                  Today
+                </div>
+                <div v-else>
+                  {{ archive.date }}
+                </div>
+              </div>
+            </th>
+            <td>
+              <span v-if="!(getTodayDate() == archive.date || visibleMap[archive.date] || isSearching)"
+                class="lighter-text" @click="toggleVisible(archive.date)">Collapsed, click the date to toggle.</span>
+              <span v-else><template v-for="achievement in archive.achievements ">
+                  <a class="achievement" target="_blank">• {{ achievement }}<br></a>
+              </span>
+            </td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row bottom-bar">
+      <input class="bottom-search" v-focus placeholder="Search" type="text" v-model="searchText">
+      <button class="bottom-item" @click="collapseAll()">Collapse All</button>
+      <button class="bottom-item" @click="expandAll()">Expand All</button>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+  </script>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
