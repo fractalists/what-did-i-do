@@ -48,15 +48,18 @@
       margin-bottom: 10px;
     }
 
-    .bottom-bar {
-      position: absolute;
-      display: flex;
-      bottom: 10px;
-      margin-left: 10px;
-      width: fit-content;
+    .footer {
+      background-color: white;
+      position: fixed;
+      width: max-content;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 30px;
+      padding-right: 100%;
+      bottom: 0px;
     }
 
-    .bottom-item {
+    .footer-item {
       display: inline-block;
       zoom: 1;
       /* zoom and *display = ie7 hack for display:inline-block */
@@ -75,7 +78,7 @@
       color: gray;
     }
 
-    .bottom-search {
+    .footer-search {
       width: max-content;
       display: inline-block;
       zoom: 1;
@@ -129,10 +132,10 @@
         </tbody>
       </table>
     </div>
-    <div class="row bottom-bar">
-      <input class="bottom-search" v-focus placeholder="Search" type="text" v-model="searchText">
-      <button class="bottom-item" @click="collapseAll()">Collapse All</button>
-      <button class="bottom-item" @click="expandAll()">Expand All</button>
+    <div class="row footer">
+      <input class="footer-search" v-focus placeholder="Search" type="text" v-model="searchText">
+      <button class="footer-item" @click="collapseAll()">Collapse All</button>
+      <button class="footer-item" @click="expandAll()">Expand All</button>
     </div>
   </div>
 
