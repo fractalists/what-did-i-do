@@ -54,7 +54,7 @@ new Vue({
       }
 
       this.isSearching = true;
-      var reg = new RegExp(searchText, "ig");
+      var reg = new RegExp(searchText, "i");
 
       var resultList = [];
 
@@ -70,9 +70,9 @@ new Vue({
           }
         }
 
-        resultArchive["date"] = archiveList[i].date;
-        resultArchive["achievements"] = tmpAchievements;
         if (tmpAchievements.length > 0) {
+          resultArchive["date"] = archiveList[i].date;
+          resultArchive["achievements"] = tmpAchievements;
           resultList.push(resultArchive);
         }
       }
